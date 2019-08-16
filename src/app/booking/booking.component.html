@@ -1,0 +1,315 @@
+<div class="text-center m-auto " *ngIf="this.submitted == true"><div class="spinner-grow text-info my-5"></div></div>
+<div class="container mt-3" *ngIf="this.submitted == false">
+	<div class="row">
+		<div class="card py-3 col-sm-4" >
+			<img class="img-fluid rounded mx-auto d-block mb-1" [alt]="this.plan.name" src="../assets/{{this.plan.imageSet}}.jpg">
+			<h3 class="text-center">{{this.plan.name}}</h3>
+			<p class="text-center">{{this.plan.description}}</p>
+			<div class="text-center">
+				<span><i class="far fa-calendar-alt"></i> {{this.date}} | </span>
+				<span><i class="far fa-sun"></i> {{this.plan.numberOfDays}} dias | </span>
+				<span><i class="fas fa-male"></i> {{this.adults}}  adultos | </span>
+				<span><i class="fas fa-child"></i> {{this.children}}  niños</span>
+			</div>
+			<div class="book-theme-grey mt-3">
+				<h6 >Precio ({{this.plan.currency}}): <i class="float-right">{{this.plan.grandTotal | currency: this.plan.currency :'symbol-narrow':'1.0-0'}}</i></h6>
+				<hr>
+				
+				<div [id]="'P'+this.plan.id" >
+					<p>{{this.adults}} Adultos <i class="float-right">{{this.plan.totalAdultRate | currency: this.plan.currency :'symbol-narrow':'1.0-0'}}</i></p>
+					<p>{{this.children}} Niños <i class="float-right">{{this.plan.totalChildRate | currency: this.plan.currency :'symbol-narrow':'1.0-0'}}</i></p>
+				</div>
+			</div>
+			
+		</div>
+		<div class=" col-sm-8">
+			<h6 class="text-center book-theme-black p-2 rounded">Datos Reserva</h6>
+			<div class="container">
+				<p class="mt-3 text-size-sm ">Datos Cliente:</p>
+				<hr>
+				<form class="form-group" #bookForm="ngForm" [ngClass]="{'was-validated': validation == false}">
+					<div class="form-row">
+						<div class="form-group col-sm-6 mb-2">
+							<label class="sr-only" for="type">Tipo Cliente:</label>
+							<div class="input-group input-group-sm">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Tipo de Cliente:</span>
+								</div>
+								<select [(ngModel)]="model.customer.type" class="form-control form-control-sm" id="type"  name="type" required >
+									<option>Natural</option> 
+									<option>Juridica</option> 		 		
+								</select>
+								<div class="invalid-feedback">Este campo es olbigatorio.</div>
+							</div>
+							
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-6 mb-2">
+							<label class="sr-only" for="documentType">Tipo Id:</label>
+							<div class="input-group  input-group-sm">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Tipo Id:</span>
+								</div>
+								<select class="form-control form-control-sm" id="documentType" [(ngModel)]="model.customer.documentType.code" name="documentType"  required>
+									<option>CC</option> 
+									<option>CE</option> 
+									<option>PP</option> 
+									<option>NIT</option> 		 		
+								</select>
+								<div class="invalid-feedback">Este campo es olbigatorio.</div>
+							</div>
+							
+						</div>
+						<div class="form-group col-sm-6 mb-2">
+							<label class="sr-only" for="customerId">N° Documento</label>
+							<div class="input-group input-group-sm">
+								<div class="input-group-prepend">
+									<span class="input-group-text">N° Documento</span>
+								</div>
+								<input type="text" class="form-control form-control-sm" id="customerId" placeholder="1.234.567.890" [(ngModel)]="model.customer.customerId" name="customerId" required >
+								<div class="invalid-feedback">Este campo es olbigatorio.</div>
+							</div>
+							
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-6 mb-2">
+							<label class="sr-only" for="name">Nombres:</label>
+							<div class="input-group  input-group-sm">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Nombres:</span>
+								</div>
+								<input type="text" class="form-control form-control-sm" id="name" placeholder="Nombres del cliente" [(ngModel)]="model.customer.name" name="name" required >
+								<div class="invalid-feedback">Este campo es olbigatorio.</div>
+							</div>
+							
+						</div>
+						<div class="form-group col-sm-6 mb-2">
+							<label class="sr-only" for="lastName">Apellidos</label>
+							<div class="input-group input-group-sm">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Apellidos</span>
+								</div>
+								<input type="text" class="form-control form-control-sm" id="lastName" placeholder="Apellidos del cliente" [(ngModel)]="model.customer.lastName"name="lastName"  required>
+								<div class="invalid-feedback">Este campo es olbigatorio.</div>
+							</div>
+							
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-6 mb-2">
+							<label class="sr-only" for="address">Dirección:</label>
+							<div class="input-group  input-group-sm">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Dirección:</span>
+								</div>
+								<input type="text" class="form-control form-control-sm" id="address" placeholder="Av. principal, Calle, Carrera, Apto." name="address" [(ngModel)]="model.customer.address" required>
+								<div class="invalid-feedback">Este campo es olbigatorio.</div>
+							</div>
+							
+						</div>
+						<div class="form-group col-sm-6 mb-2">
+							<label class="sr-only" for="phoneNumber">Telefono:</label>
+							<div class="input-group input-group-sm">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Telefono:</span>
+								</div>
+								<input type="text" class="form-control form-control-sm" id="phoneNumber" placeholder="(+57) 412 2548934" name="phoneNumber" [(ngModel)]="model.customer.phoneNumber" required>
+								<div class="invalid-feedback">Este campo es olbigatorio.</div>
+							</div>
+							
+						</div>
+					</div>
+					<div *ngIf="this.adults+this.children>1">
+						<p class="mt-3 text-size-sm">Datos Acompañantes:</p>
+						<hr>
+						<div class="form-row">
+							<div class="form-group col-sm-6 mb-2">
+								<label class="sr-only" for="typeA">Tipo:</label>
+								<div class="input-group input-group-sm">
+									<div class="input-group-prepend mr-2">
+										<span class="input-group-text">Tipo:</span>
+									</div>
+									<span class="form-check-inline">
+										<label class="form-check-label">
+											<input type="radio" [(ngModel)]="visitor.type" class="form-check-input" value="adult" name="typeA" [required]="this.adults+this.children != this.model.visitors.length +1">Adulto
+										</label>
+									</span>
+									<span class="form-check-inline">
+										<label class="form-check-label">
+											<input type="radio" [(ngModel)]="visitor.type" class="form-check-input" value="children" name="typeA" [required]="this.adults+this.children != this.model.visitors.length +1">Niño
+										</label>
+									</span>
+									<div class="invalid-feedback">Este campo es olbigatorio.</div>
+								</div>
+								
+							</div>
+							
+						</div>
+						<div class="form-row">
+							<div class="form-group col-sm-6 mb-2">
+								<label class="sr-only" for="documentTypeA">Tipo Id:</label>
+								<div class="input-group  input-group-sm">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Tipo Id:</span>
+									</div>
+									<select class="form-control form-control-sm" id="documentTypeA"  name="documentTypeA" [(ngModel)]="visitor.documentType.code" [required]="this.adults+this.children != this.model.visitors.length +1">
+										<option>CC</option> 
+										<option>CE</option> 
+										<option>PP</option> 
+										<option>TI</option>		 		
+									</select>
+									<div class="invalid-feedback">Este campo es olbigatorio.</div>
+								</div>
+								
+							</div>
+							<div class="form-group col-sm-6 mb-2">
+								<label class="sr-only" for="document">N° Documento</label>
+								<div class="input-group input-group-sm">
+									<div class="input-group-prepend">
+										<span class="input-group-text">N° Documento</span>
+									</div>
+									<input type="text" class="form-control form-control-sm" id="document" placeholder="1.234.567.890" name="document"  [(ngModel)]="visitor.document" [required]="this.adults+this.children != this.model.visitors.length +1" >
+									<div class="invalid-feedback">Este campo es olbigatorio.</div>
+								</div>
+								
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-sm-6 mb-2">
+								<label class="sr-only" for="firstName">Nombres:</label>
+								<div class="input-group  input-group-sm">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Nombres:</span>
+									</div>
+									<input type="text" class="form-control form-control-sm" id="firstName" placeholder="Nombres acompañante" name="firstName"  [(ngModel)]="visitor.firstName" [required]="this.adults+this.children != this.model.visitors.length +1">
+									<div class="invalid-feedback">Este campo es olbigatorio.</div>
+								</div>
+								
+							</div>
+							<div class="form-group col-sm-6 mb-2">
+								<label class="sr-only" for="lastNameA">Apellidos</label>
+								<div class="input-group input-group-sm">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Apellidos</span>
+									</div>
+									<input type="text" class="form-control form-control-sm" id="lastNameA" placeholder="Apellidos del acompañante" name="lastNameA"  [(ngModel)]="visitor.lastName" [required]="this.adults+this.children != this.model.visitors.length +1">
+									<div class="invalid-feedback">Este campo es olbigatorio.</div>
+								</div>
+								
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-sm-6 mb-2">
+								<label class="sr-only" for="email">Email:</label>
+								<div class="input-group  input-group-sm">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Email:</span>
+									</div>
+									<input type="email" class="form-control form-control-sm" id="email" placeholder="example@domain.com" name="email" [(ngModel)]="visitor.email" [required]="this.adults+this.children != this.model.visitors.length +1">
+									<div class="invalid-feedback">Este campo es olbigatorio.</div>
+								</div>
+								
+							</div>
+							<div class="form-group col-sm-6 mb-2">
+								<label class="sr-only" for="gender">Género:</label>
+								<div class="input-group input-group-sm">
+									<div class="input-group-prepend mr-2">
+										<span class="input-group-text">Género:</span>
+									</div>
+									<span class="form-check-inline">
+										<label class="form-check-label">
+											<input type="radio" [(ngModel)]="visitor.gender" class="form-check-input" value="Male" name="gender" [required]="this.adults+this.children != this.model.visitors.length +1">Masculino
+										</label>
+									</span>
+									<span class="form-check-inline">
+										<label class="form-check-label">
+											<input type="radio"  [(ngModel)]="visitor.gender" class="form-check-input" value="Female"  name="gender" [required]="this.adults+this.children != this.model.visitors.length +1">Femenino
+										</label>
+									</span>
+									<div class="invalid-feedback">Este campo es olbigatorio.</div>
+								</div>
+								
+							</div>
+							
+						</div>
+						<div class="form-row">
+							<div class="form-group col-sm-6 mb-2">
+								<label class="sr-only" for="birthDate">Fecha Nacimiento:</label>
+								<div class="input-group  input-group-sm">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Fecha Nacimiento:</span>
+									</div>
+									<input type="date" class="form-control form-control-sm" id="birthDate" name="birthDate"  [(ngModel)]="visitor.birthDate" (ngModelChange)="birthChange($event)" [required]="this.adults+this.children != this.model.visitors.length +1">
+									<div class="invalid-feedback" [ngClass]="{'d-block': !dateValid}">Esta fecha no es valida.</div>
+
+								</div>
+								
+							</div>
+							<div class="form-group col-sm-6 mb-2">
+								<label class="sr-only" for="age">Edad</label>
+								<div class="input-group input-group-sm">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Edad (Años):</span>
+									</div>
+									<input type="number" class="form-control form-control-sm" id="age" placeholder="20" name="age" [(ngModel)]="visitor.age" readonly="true" [required]="this.adults+this.children != this.model.visitors.length +1" >
+									<div class="invalid-feedback">Este campo es obligatorio</div>
+								</div>
+								
+							</div>
+						</div>
+						<button type="button" class="btn btn-sm float-right" (click)="addVisitor(visitor)" *ngIf="visitorIndex == undefined">Agregar  <i class="fas fa-plus" style="color: black"></i></button>
+						<button type="button" class="btn btn-sm float-right" (click)="addVisitor(visitor)" *ngIf="visitorIndex != undefined">Modificar <i class="fas fa-plus" style="color: black"></i></button>
+					</div>
+					
+					
+				</form>
+				
+			</div>
+			
+			
+		</div>
+
+		<div class="container pt-3 px-5" style="clear: both;">
+			<button target="_blank" class="btn btn-block mt-3 m-auto" (click)="validarForm(bookForm.form.invalid)" >Generar Reserva</button>
+		</div>	
+		<div class="col-sm-12 mt-1" *ngIf="this.model.visitors.length > 0 && this.model.visitors[0].type != undefined">
+			<table class="table table-hover table-sm" style="font-size:12px ">
+				<thead>
+					<tr class="text-center">
+						<th colspan="11">Detalle Acompañantes</th>
+					</tr>
+					<tr class="text-center">
+						<th>Tipo</th>
+						<th>Tipo Id</th>
+						<th>Documento</th>
+						<th>Nombres</th>
+						<th>Apellidos</th>
+						<th>Email</th>
+						<th>Género</th>
+						<th>Fecha Nacimiento</th>
+						<th>Edad</th>
+						<th>Editar</th>
+						<th>Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="text-center" *ngFor="let visitor of this.model.visitors; let i = index">
+						<td>{{visitor.type}}</td>
+						<td>{{visitor.documentType.code}}</td>
+						<td>{{visitor.document}}</td>
+						<td>{{visitor.firstName}}</td>
+						<td>{{visitor.lastName}}</td>
+						<td>{{visitor.email}}</td>
+						<td>{{visitor.gender}}</td>
+						<td>{{visitor.birthDate}}</td>
+						<td>{{visitor.age}}</td>
+						<td (click)="infoVisitor(i)"><i class="fas fa-user-edit" ></i></td>
+						<td (click)="deleteVisitor(i)"><i class="fas fa-minus-circle"></i></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

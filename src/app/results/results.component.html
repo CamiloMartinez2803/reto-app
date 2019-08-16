@@ -1,0 +1,33 @@
+<div class="text-center m-auto " *ngIf="this.plansArray.length==0"><div class="spinner-grow text-info my-5"></div></div>
+<div class="container mt-5 alert alert-info alert-dismissible fade show" *ngIf="this.plansArray.length>0 && this.plansArray[0].message != undefined">
+    <button type="button" class="close" (click)="close()">&times;</button>
+    <strong>Disculpa!</strong> {{this.plansArray[0].message}}
+  </div>
+<div class="container mt-5" *ngIf="this.plansArray.length>0 && this.plansArray[0].message == undefined">
+	<div class="row">
+		<div class="card py-3 col-sm-4" *ngFor="let plan of this.plansArray">
+			<img class="img-fluid rounded mx-auto d-block mb-1" [alt]="plan.name" src="../assets/{{plan.imageSet}}.jpg">
+			<h3 class="text-center">{{plan.name}}</h3>
+			<p class="text-center">{{plan.description}}</p>
+			<div class="text-center">
+				<span><i class="far fa-calendar-alt"></i> {{this.date}} | </span>
+				<span><i class="far fa-sun"></i> {{plan.numberOfDays}} dias | </span>
+				<span><i class="fas fa-male"></i> {{this.adults}}  adultos | </span>
+				<span><i class="fas fa-child"></i> {{this.children}}  niños</span>
+			</div>
+			<div class="book-theme-grey mt-3">
+				<h6 >Precio ({{plan.currency}}): <i class="float-right">{{plan.grandTotal | currency: plan.currency :'symbol-narrow':'1.0-0'}}</i></h6>
+				<hr>
+				<div class="text-center  mb-2">
+					<span data-toggle="collapse" [attr.data-target]="'#P'+plan.id" ><a class="m-auto"><i class="fas fa-chevron-circle-down"></i>  Ver Detalle</a></span>
+				</div>
+				<div [id]="'P'+plan.id" class="collapse">
+					<p>{{this.adults}} Adultos <i class="float-right">{{plan.totalAdultRate | currency: plan.currency :'symbol-narrow':'1.0-0'}}</i></p>
+					<p>{{this.children}} Niños <i class="float-right">{{plan.totalChildRate | currency: plan.currency :'symbol-narrow':'1.0-0'}}</i></p>
+				</div>
+			</div>
+			<a (click)="parseUrl(plan)" [routerLink]="['booking/',this.urlParse]" target="_blank" class="btn btn-block mb-3 m-auto " >Reservar</a>
+		</div>
+	</div>
+</div>
+

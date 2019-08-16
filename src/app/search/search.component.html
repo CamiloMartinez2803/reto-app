@@ -1,0 +1,42 @@
+<div class="container mt-5">
+	<div class="row book-theme-grey">
+		<div class="col-sm-4">
+			<img class="img-fluid rounded" alt="magic_kimdong" src="../assets/disney.jpg">
+		</div>
+		<div class="col-sm-8">
+			<h3>Walt Disney World</h3>
+			<p class="text-justify pt-3">Walt Disney World Resort, comúnmente llamado Walt Disney World o Disney World, es un complejo turístico famoso por sus parques temáticos y numerosos hoteles. El complejo es operado por Walt Disney Parks, Experiences and Products y propiedad de The Walt Disney Comapany. Está localizado en la zona de Lake Buena Vista y Bay Lake en Florida.</p>
+		</div>
+		<div class="col-sm-12"><hr ></div>
+		
+	</div>
+	
+	<div class="row book-theme-blue card">
+		<form class="form-group form-inline" #resultsForm="ngForm"   (ngSubmit)="validarForm(resultsForm.form.invalid)">
+			<div class="form-group mb-3">
+		      <label class ="mx-1" for="ndays">N° de días:</label>
+		      <input type="number" class="form-control form-control-sm " id="ndays"  [(ngModel)]="this.model.days"  name="ndays" required>
+		      <div class="invalid-feedback">Este campo es obligatorio</div>
+		    </div>
+		    <div class="form-group mb-3">
+		      <label class ="mx-1" for="nadultos">N° de adultos:</label>
+		      <input type="number" class="form-control form-control-sm " id="nadultos"  [(ngModel)]="this.model.adults" name="nadultos" required>
+		      <div class="invalid-feedback">Este campo es obligatorio</div>
+		    </div>
+		    <div class="form-group mb-3">
+		      <label class ="mx-1" for="nninos">N° de niños:</label>
+		      <input type="number" class="form-control form-control-sm " id="nninos"  [(ngModel)]="this.model.children" name="nninos" required>
+		      <div class="invalid-feedback">Este campo es obligatorio</div>
+		    </div>
+		    <div class="form-group mb-3">
+		      <label class ="mx-1" for="nninos">Fecha de viaje:</label>
+		      <input type="date" class="form-control form-control-sm " id="fviaje"  [(ngModel)]="this.model.date" name="fviaje" required>
+		      <div class="invalid-feedback">Este campo es obligatorio</div>
+		    </div>
+		    <button type="submit" class="btn btn-sm mb-3 ml-auto" ><i class="fas fa-search"></i></button>
+		    
+		    
+		    
+		</form>
+	</div>
+</div>
